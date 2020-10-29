@@ -16,11 +16,13 @@ bot = commands.Bot(command_prefix='!')
 
 async def check_send_notifications(message, reaction):
     if str(reaction.emoji) != "🚀":
+        print(f"Skipping send notification. Wrong reaction emoji, got {str(reaction.emoji)}, expected 🚀")
         return
 
     lines = message.content.split('\n') 
     host_mention = lines[4][6:] 
-    if str(host_mention[2:-1]) != str(reaction.user_id):
+    if str(host_mention[3:-1]) != str(reaction.user_id):
+        print(f"Skipping send notification. Wrong user reacted. got {str(reaction.user_id)}, expected {str(host_mention[2:-1])}")
         return
 
     mentions_to_send = get_mention_users(lines)
